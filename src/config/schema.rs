@@ -145,6 +145,10 @@ pub struct Config {
     /// Audio playback configuration.
     #[serde(default)]
     pub audio: AudioConfig,
+
+    /// Text-to-speech server configuration.
+    #[serde(default)]
+    pub tts: TtsConfig,
 }
 
 // ── Delegate Agents ──────────────────────────────────────────────
@@ -278,6 +282,54 @@ impl Default for AudioConfig {
             enabled: false,
             speaker_device: Self::default_device(),
             volume: Self::default_volume(),
+        }
+    }
+
+}
+
+// ── TTS ──────────────────────────────────────────────────────────
+
+/// Text-to-speech configuration (remote TTS server).
+#[derive(Debug, Clone, Serialize, Deserialize)]
+pub struct TtsConfig {
+    /// Enable TTS speak tool.
+    #[serde(default)]
+    pub enabled: bool,
+
+    /// TTS server base URL (e.g. "http://192.168.1.205:8800").
+    #[serde(default)]
+    pub endpoint: String,
+
+    /// Voice name for voice cloning (empty = default voice).
+    #[serde(default)]
+    pub voice: String,
+
+    /// Expressiveness (0.0–2.0, default 0.5).
+    #[serde(default = "TtsConfig::default_exaggeration")]
+    pub exaggeration: f32,
+
+    /// CFG weight (0.0–1.0, default 0.5).
+    #[serde(default = "TtsConfig::default_cfg_weight")]
+    pub cfg_weight: f32,
+}
+
+impl TtsConfig {
+    fn default_exaggeration() -> f32 {
+        0.5
+    }
+    fn default_cfg_weight() -> f32 {
+        0.5
+    }
+}
+
+impl Default for TtsConfig {
+    fn default() -> Self {
+        Self {
+            enabled: false,
+            endpoint: String::new(),
+            voice: String::new(),
+            exaggeration: Self::default_exaggeration(),
+            cfg_weight: Self::default_cfg_weight(),
         }
     }
 }
@@ -2472,6 +2524,7 @@ impl Default for Config {
             agents: HashMap::new(),
             hardware: HardwareConfig::default(),
             audio: AudioConfig::default(),
+            tts: TtsConfig::default(),
             query_classification: QueryClassificationConfig::default(),
         }
     }
@@ -3303,6 +3356,7 @@ default_temperature = 0.7
             agents: HashMap::new(),
             hardware: HardwareConfig::default(),
             audio: AudioConfig::default(),
+            tts: TtsConfig::default(),
         };
 
         let toml_str = toml::to_string_pretty(&config).unwrap();
@@ -3444,6 +3498,7 @@ tool_dispatcher = "xml"
             agents: HashMap::new(),
             hardware: HardwareConfig::default(),
             audio: AudioConfig::default(),
+            tts: TtsConfig::default(),
         };
 
         config.save().unwrap();

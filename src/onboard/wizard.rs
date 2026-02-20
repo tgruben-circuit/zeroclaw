@@ -140,6 +140,7 @@ pub fn run_wizard() -> Result<Config> {
         agents: std::collections::HashMap::new(),
         hardware: hardware_config,
         audio: crate::config::AudioConfig::default(),
+        tts: crate::config::TtsConfig::default(),
         query_classification: crate::config::QueryClassificationConfig::default(),
     };
 
@@ -365,6 +366,7 @@ pub fn run_quick_setup(
         agents: std::collections::HashMap::new(),
         hardware: crate::config::HardwareConfig::default(),
         audio: crate::config::AudioConfig::default(),
+        tts: crate::config::TtsConfig::default(),
         query_classification: crate::config::QueryClassificationConfig::default(),
     };
 
