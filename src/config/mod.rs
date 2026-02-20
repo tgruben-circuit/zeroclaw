@@ -4,7 +4,7 @@ pub mod schema;
 pub use schema::{
     apply_runtime_proxy_to_builder, build_runtime_proxy_client,
     build_runtime_proxy_client_with_timeouts, runtime_proxy_config, set_runtime_proxy_config,
-    AgentConfig, AuditConfig, AutonomyConfig, BrowserComputerUseConfig, BrowserConfig,
+    AgentConfig, AudioConfig, AuditConfig, AutonomyConfig, BrowserComputerUseConfig, BrowserConfig,
     ChannelsConfig, ClassificationRule, ComposioConfig, Config, CostConfig, CronConfig,
     DelegateAgentConfig, DiscordConfig, DockerRuntimeConfig, GatewayConfig, HardwareConfig,
     HardwareTransport, HeartbeatConfig, HttpRequestConfig, IMessageConfig, IdentityConfig,

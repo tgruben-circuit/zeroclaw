@@ -139,6 +139,7 @@ pub fn run_wizard() -> Result<Config> {
         peripherals: crate::config::PeripheralsConfig::default(),
         agents: std::collections::HashMap::new(),
         hardware: hardware_config,
+        audio: crate::config::AudioConfig::default(),
         query_classification: crate::config::QueryClassificationConfig::default(),
     };
 
@@ -363,6 +364,7 @@ pub fn run_quick_setup(
         peripherals: crate::config::PeripheralsConfig::default(),
         agents: std::collections::HashMap::new(),
         hardware: crate::config::HardwareConfig::default(),
+        audio: crate::config::AudioConfig::default(),
         query_classification: crate::config::QueryClassificationConfig::default(),
     };
 

@@ -141,6 +141,10 @@ pub struct Config {
     /// Hardware configuration (wizard-driven physical world setup).
     #[serde(default)]
     pub hardware: HardwareConfig,
+
+    /// Audio playback configuration.
+    #[serde(default)]
+    pub audio: AudioConfig,
 }
 
 // ── Delegate Agents ──────────────────────────────────────────────
@@ -236,6 +240,44 @@ impl Default for HardwareConfig {
             baud_rate: default_baud_rate(),
             probe_target: None,
             workspace_datasheets: false,
+        }
+    }
+}
+
+// ── Audio ────────────────────────────────────────────────────────
+
+/// Audio playback configuration.
+#[derive(Debug, Clone, Serialize, Deserialize)]
+pub struct AudioConfig {
+    /// Enable audio playback tools.
+    #[serde(default)]
+    pub enabled: bool,
+
+    /// ALSA playback device (e.g. "plughw:1,0", "default").
+    /// Found via `aplay -l` on the target device.
+    #[serde(default = "AudioConfig::default_device")]
+    pub speaker_device: String,
+
+    /// Volume (0–100). Applied via amixer on playback.
+    #[serde(default = "AudioConfig::default_volume")]
+    pub volume: u8,
+}
+
+impl AudioConfig {
+    fn default_device() -> String {
+        "default".to_string()
+    }
+    fn default_volume() -> u8 {
+        80
+    }
+}
+
+impl Default for AudioConfig {
+    fn default() -> Self {
+        Self {
+            enabled: false,
+            speaker_device: Self::default_device(),
+            volume: Self::default_volume(),
         }
     }
 }
@@ -2429,6 +2471,7 @@ impl Default for Config {
             peripherals: PeripheralsConfig::default(),
             agents: HashMap::new(),
             hardware: HardwareConfig::default(),
+            audio: AudioConfig::default(),
             query_classification: QueryClassificationConfig::default(),
         }
     }
