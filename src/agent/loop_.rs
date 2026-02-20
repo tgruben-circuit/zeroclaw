@@ -1337,6 +1337,12 @@ pub async fn run(
             "Play audio through connected speaker. Use when: user asks to play a sound, test speakers, or play audio. Can play WAV files or generate test tones.",
         ));
     }
+    if config.tts.enabled && !config.tts.endpoint.is_empty() {
+        tool_descs.push((
+            "tts_speak",
+            "Speak text out loud through the speaker using text-to-speech. Use when: user asks you to say something, speak, announce, or when a voice response is appropriate.",
+        ));
+    }
     let bootstrap_max_chars = if config.agent.compact_context {
         Some(6000)
     } else {
