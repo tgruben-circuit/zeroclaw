@@ -561,6 +561,13 @@ enabled = false                # opt-in audio playback
 speaker_device = "plughw:1,0"  # ALSA device (find with: aplay -l)
 volume = 80                    # 0-100
 
+[tts]
+enabled = false                          # opt-in text-to-speech
+endpoint = "http://192.168.1.205:8800"   # Spark Voice Server
+voice = ""                               # voice name (empty = default)
+exaggeration = 0.5                       # 0.0-2.0
+cfg_weight = 0.5                         # 0.0-1.0
+
 [browser]
 enabled = false                # opt-in browser_open + browser tools
 allowed_domains = ["docs.rs"]  # required when browser is enabled
