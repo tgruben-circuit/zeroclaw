@@ -556,6 +556,11 @@ provider = "none"              # "none", "cloudflare", "tailscale", "ngrok", "cu
 [secrets]
 encrypt = true                 # API keys encrypted with local key file
 
+[audio]
+enabled = false                # opt-in audio playback
+speaker_device = "plughw:1,0"  # ALSA device (find with: aplay -l)
+volume = 80                    # 0-100
+
 [browser]
 enabled = false                # opt-in browser_open + browser tools
 allowed_domains = ["docs.rs"]  # required when browser is enabled
