@@ -1331,6 +1331,12 @@ pub async fn run(
             "Query connected hardware for reported GPIO pins and LED pin. Use when: user asks what pins are available.",
         ));
     }
+    if config.audio.enabled {
+        tool_descs.push((
+            "audio_play",
+            "Play audio through connected speaker. Use when: user asks to play a sound, test speakers, or play audio. Can play WAV files or generate test tones.",
+        ));
+    }
     let bootstrap_max_chars = if config.agent.compact_context {
         Some(6000)
     } else {
