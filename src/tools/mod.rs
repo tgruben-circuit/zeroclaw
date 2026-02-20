@@ -28,6 +28,7 @@ pub mod shell;
 pub mod traits;
 pub mod web_search_tool;
 pub mod audio_play;
+pub mod tts_speak;
 
 pub use browser::{BrowserTool, ComputerUseConfig};
 pub use browser_open::BrowserOpenTool;
@@ -62,6 +63,7 @@ pub use traits::Tool;
 pub use traits::{ToolResult, ToolSpec};
 pub use web_search_tool::WebSearchTool;
 pub use audio_play::AudioPlayTool;
+pub use tts_speak::TtsSpeakTool;
 
 use crate::config::{Config, DelegateAgentConfig};
 use crate::memory::Memory;
@@ -208,6 +210,14 @@ pub fn all_tools_with_runtime(
     // Audio playback tool (enabled via [audio] config)
     if root_config.audio.enabled {
         tools.push(Box::new(AudioPlayTool::new(root_config.audio.clone())));
+    }
+
+    // TTS speak tool (enabled via [tts] config, requires [audio] for speaker device)
+    if root_config.tts.enabled && !root_config.tts.endpoint.is_empty() {
+        tools.push(Box::new(TtsSpeakTool::new(
+            root_config.tts.clone(),
+            &root_config.audio,
+        )));
     }
 
     // Vision tools are always available
