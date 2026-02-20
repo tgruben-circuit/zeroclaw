@@ -27,6 +27,7 @@ pub mod screenshot;
 pub mod shell;
 pub mod traits;
 pub mod web_search_tool;
+pub mod audio_play;
 
 pub use browser::{BrowserTool, ComputerUseConfig};
 pub use browser_open::BrowserOpenTool;
@@ -60,6 +61,7 @@ pub use traits::Tool;
 #[allow(unused_imports)]
 pub use traits::{ToolResult, ToolSpec};
 pub use web_search_tool::WebSearchTool;
+pub use audio_play::AudioPlayTool;
 
 use crate::config::{Config, DelegateAgentConfig};
 use crate::memory::Memory;
@@ -201,6 +203,11 @@ pub fn all_tools_with_runtime(
             root_config.web_search.max_results,
             root_config.web_search.timeout_secs,
         )));
+    }
+
+    // Audio playback tool (enabled via [audio] config)
+    if root_config.audio.enabled {
+        tools.push(Box::new(AudioPlayTool::new(root_config.audio.clone())));
     }
 
     // Vision tools are always available
